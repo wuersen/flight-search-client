@@ -29,6 +29,10 @@ _destinationInput(event) {
     destination: event.target.value
   });
 }
+_handleSubmit(event) {
+  event.preventDefault();
+  console.log('fetchFlight function running')
+}
 
 
    render() {
