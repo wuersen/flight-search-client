@@ -13,7 +13,8 @@ class FlightSearch extends Component {
   constructor() {
     super();
     this.state = {
-      flights: []
+      flights: [],
+      planes: [{code: 1, rows:[1,2], columns:['A','B']}]
     }
 
     this.fetchFlights = this.fetchFlights.bind(this);
@@ -23,13 +24,14 @@ class FlightSearch extends Component {
     fetchFlights (date, origin, destination) {
       console.log(date, origin, destination)
       axios.get(SERVER_URL).then((response) => {
-      const allFlights = response.data
-      const matchingFlights = _.where(allFlights, {date: date, origin: origin, destination: destination})
-      this.setState({ flights: matchingFlights})
+        const allFlights = response.data
+        const matchingFlights = _.where(allFlights, {date: date, origin: origin, destination: destination})
+        this.setState({ flights: matchingFlights})
       });
 
-      axios.get(SERVER_URL_PLANES).then((plane) => {
-      console.log(plane)
+      axios.get(SERVER_URL_PLANES).then((response) => {
+        const allPlanes = response.data
+        this.setState({ planes: allPlanes})
       });
     };
 
@@ -46,7 +48,7 @@ class FlightSearch extends Component {
          <SearchForm onSubmit={ this.fetchFlights }/>
          <SearchResult flights={ this.state.flights }/>
          <h2>Select Seat</h2>
-         <SelectSeat/>
+         <SelectSeat plane={ this.state.planes[0] }/>
 
 
       </div>
