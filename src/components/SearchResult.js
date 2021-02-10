@@ -5,7 +5,7 @@ class SearchResult extends Component {
   render(){
     return (
       <div>
-        { this.props.flights.map((flight) => <p>date: {flight.date}, flight code: { flight.code }, origin: {flight.origin}, destination: {flight.destination} </p> ) }
+        { this.props.flights.map((flight) => <p key={flight.id}>date: {flight.date}, flight code: { flight.code }, origin: {flight.origin}, destination: {flight.destination} </p> ) }
       </div>
     )
   }

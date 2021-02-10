@@ -39,8 +39,8 @@ _handleSubmit(event) {
      return (
        <form onSubmit={this._handleSubmit}>
           <input type="date" placeholder="date"  required onInput={ this._dateInput }/>
-          <input type="text" placeholder="origin" required onInput={ this._originInput }/>
-          <input type="text" placeholder="destination" required onInput={ this._destinationInput }/>
+          <input type="text" placeholder="origin"  required onInput={ this._originInput }/>
+          <input type="text" placeholder="destination"  required onInput={ this._destinationInput }/>
           <button type="submit">Search flight</button>
       </form>
      )

@@ -4,8 +4,10 @@ import _ from 'underscore'
 
 import SearchForm from './SearchForm'
 import SearchResult from './SearchResult'
+import SelectSeat from './SelectSeat'
 
 const SERVER_URL = 'https://flight-search-server.herokuapp.com/flights.json'
+const SERVER_URL_PLANES = 'https://flight-search-server.herokuapp.com/planes.json'
 
 class FlightSearch extends Component {
   constructor() {
@@ -23,13 +25,11 @@ class FlightSearch extends Component {
       axios.get(SERVER_URL).then((response) => {
       const allFlights = response.data
       const matchingFlights = _.where(allFlights, {date: date, origin: origin, destination: destination})
-      console.log(allFlights)
-      console.log(matchingFlights)
-
       this.setState({ flights: matchingFlights})
+      });
 
-      //  this.setState({flights: matchingFlights});
-      //  setTimeout(fetchSecrets, 4000) //recursive alternative to setInterval
+      axios.get(SERVER_URL_PLANES).then((plane) => {
+      console.log(plane)
       });
     };
 
@@ -41,9 +41,13 @@ class FlightSearch extends Component {
   render() {
     return (
       <div>
-         <h1>Flight Search</h1>
+         <h1>Pam Pacific Airline</h1>
+         <h2>Flight Search</h2>
          <SearchForm onSubmit={ this.fetchFlights }/>
          <SearchResult flights={ this.state.flights }/>
+         <h2>Select Seat</h2>
+         <SelectSeat/>
+
 
       </div>
     )
