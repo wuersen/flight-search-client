@@ -11,7 +11,7 @@ class SearchForm extends Component {
     this._dateInput = this._dateInput.bind(this);
     this._originInput = this._originInput.bind(this);
     this._destinationInput = this._destinationInput.bind(this);
-
+    this._handleSubmit = this._handleSubmit.bind(this);
   }
 
 _dateInput(event) {
@@ -31,14 +31,14 @@ _destinationInput(event) {
 }
 _handleSubmit(event) {
   event.preventDefault();
-  this.props.onSubmit()
+  this.props.onSubmit(this.state.date, this.state.origin, this.state.destination)
 }
 
 
    render() {
      return (
        <form onSubmit={this._handleSubmit}>
-          <input type="text" placeholder="date" required onInput={ this._dateInput }/>
+          <input type="date" placeholder="date"  required onInput={ this._dateInput }/>
           <input type="text" placeholder="origin" required onInput={ this._originInput }/>
           <input type="text" placeholder="destination" required onInput={ this._destinationInput }/>
           <button type="submit">Search flight</button>
