@@ -31,7 +31,7 @@ _destinationInput(event) {
 }
 _handleSubmit(event) {
   event.preventDefault();
-  console.log('fetchFlight function running')
+  this.props.onSubmit()
 }
 
 
