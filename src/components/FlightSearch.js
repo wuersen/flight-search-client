@@ -6,39 +6,40 @@ import SearchForm from './SearchForm'
 import SearchResult from './SearchResult'
 import SelectSeat from './SelectSeat'
 
-const SERVER_URL = 'https://flight-search-server.herokuapp.com/flights.json'
-const SERVER_URL_PLANES = 'https://flight-search-server.herokuapp.com/planes.json'
+const FLIGHTS_URL = 'https://flight-search-server.herokuapp.com/flights.json'
+const PLANES_URL = 'https://flight-search-server.herokuapp.com/planes.json'
 
 class FlightSearch extends Component {
   constructor() {
     super();
     this.state = {
       flights: [],
-      planes: [{code: 1, rows:[1,2], columns:['A','B']}]
+      selectedPlane: {code:"", rows:[] , columns:[]}
     }
 
     this.fetchFlights = this.fetchFlights.bind(this);
+    this.fetchPlane = this.fetchPlane.bind(this);
 
   }
 
-    fetchFlights (date, origin, destination) {
+  fetchFlights (date, origin, destination) {
       console.log(date, origin, destination)
-      axios.get(SERVER_URL).then((response) => {
+      axios.get(FLIGHTS_URL).then((response) => {
         const allFlights = response.data
         const matchingFlights = _.where(allFlights, {date: date, origin: origin, destination: destination})
         this.setState({ flights: matchingFlights})
       });
-
-      axios.get(SERVER_URL_PLANES).then((response) => {
-        const allPlanes = response.data
-        this.setState({ planes: allPlanes})
-      });
     };
 
-
-
-
-
+  fetchPlane(flight_id) {
+    const id = Number(flight_id);
+    const selectedFlight = _.findWhere(this.state.flights, {id: id});
+    const selectedPlaneId = selectedFlight.plane_id
+    axios.get(PLANES_URL).then((response) => {
+      const selectedPlane = _.findWhere(response.data, {id: selectedPlaneId})
+      this.setState({selectedPlane:selectedPlane})
+    });
+  }
 
   render() {
     return (
@@ -46,11 +47,9 @@ class FlightSearch extends Component {
          <h1>Pam Pacific Airline</h1>
          <h2>Flight Search</h2>
          <SearchForm onSubmit={ this.fetchFlights }/>
-         <SearchResult flights={ this.state.flights }/>
+         <SearchResult flights={ this.state.flights } onSubmit={ this.fetchPlane }/>
          <h2>Select Seat</h2>
-         <SelectSeat plane={ this.state.planes[0] }/>
-
-
+         <SelectSeat plane={ this.state.selectedPlane }/>
       </div>
     )
   }
