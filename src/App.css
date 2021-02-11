@@ -20,3 +20,14 @@ td:hover {
 th {
   background-color: black;
 }
+
+body {
+  background-color: #ccffff;
+  text-align: center;
+}
+
+h1{
+
+   text-shadow: 6px 6px #99c2ff;
+
+}
