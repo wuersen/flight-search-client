@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import _ from 'underscore'
-import axios from 'axios'
+import '../App.css';
 
 class SelectSeat extends Component {
   constructor() {
